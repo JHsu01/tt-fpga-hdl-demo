@@ -362,10 +362,10 @@ logic FpgaPins_Fpga_CALC_valid_a1,
                      assign FpgaPins_Fpga_CALC_out_a2[7:0] =
                         FpgaPins_Fpga_CALC_reset_a2            ? 8'b0 :
                         ! FpgaPins_Fpga_CALC_valid_a2            ? FpgaPins_Fpga_CALC_out_a3 :
-                        FpgaPins_Fpga_CALC_op_a2 == 2'b000 ? FpgaPins_Fpga_CALC_sum_a2 :
-                        FpgaPins_Fpga_CALC_op_a2 == 2'b001 ? FpgaPins_Fpga_CALC_diff_a2 :
-                        FpgaPins_Fpga_CALC_op_a2 == 2'b010 ? FpgaPins_Fpga_CALC_prod_a2 :
-                        FpgaPins_Fpga_CALC_op_a2 == 2'b011 ? FpgaPins_Fpga_CALC_quot_a2 :
+                        FpgaPins_Fpga_CALC_op_a2 == 3'b000 ? FpgaPins_Fpga_CALC_sum_a2 :
+                        FpgaPins_Fpga_CALC_op_a2 == 3'b001 ? FpgaPins_Fpga_CALC_diff_a2 :
+                        FpgaPins_Fpga_CALC_op_a2 == 3'b010 ? FpgaPins_Fpga_CALC_prod_a2 :
+                        FpgaPins_Fpga_CALC_op_a2 == 3'b011 ? FpgaPins_Fpga_CALC_quot_a2 :
                         FpgaPins_Fpga_CALC_op_a2 == 3'b100 ? FpgaPins_Fpga_CALC_mem_a4 :
                                         FpgaPins_Fpga_CALC_out_a3;
             
@@ -381,21 +381,21 @@ logic FpgaPins_Fpga_CALC_valid_a1,
                   //_@3
                      assign FpgaPins_Fpga_CALC_digit_a3[3:0] = FpgaPins_Fpga_CALC_out_a3[3:0];
                      assign uo_out =
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h00) ? 8'b00111111 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h01) ? 8'b00000110 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h02) ? 8'b01011011 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h03) ? 8'b01001111 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h04) ? 8'b01100110 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h05) ? 8'b01101101 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h06) ? 8'b01111101 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h07) ? 8'b00000111 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h08) ? 8'b01111111 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h09) ? 8'b01100111 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h0a) ? 8'b01110111 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h0b) ? 8'b01111100 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h0c) ? 8'b00111001 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h0d) ? 8'b01011110 :
-                        (FpgaPins_Fpga_CALC_digit_a3 == 8'h0e) ? 8'b01111001 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h00) ? 8'b00111111 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h01) ? 8'b00000110 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h02) ? 8'b01011011 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h03) ? 8'b01001111 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h04) ? 8'b01100110 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h05) ? 8'b01101101 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h06) ? 8'b01111101 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h07) ? 8'b00000111 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h08) ? 8'b01111111 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h09) ? 8'b01100111 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h0a) ? 8'b01110111 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h0b) ? 8'b01111100 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h0c) ? 8'b00111001 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h0d) ? 8'b01011110 :
+                        (FpgaPins_Fpga_CALC_digit_a3 == 4'h0e) ? 8'b01111001 :
                                             8'b01110001;
             
                // Note that pipesignals assigned here can be found under /fpga_pins/fpga.
