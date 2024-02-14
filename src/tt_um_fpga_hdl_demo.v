@@ -10,7 +10,7 @@
 
 // ================================================
 // A simple Makerchip Verilog test bench driving random stimulus.
-// Modify the module contents to your needs.
+// Modify the module contents to your needs. Made by Joseph Hsu
 // ================================================
 
 module top(input logic clk, input logic reset, input logic [31:0] cyc_cnt, output logic passed, output logic failed);
