@@ -251,7 +251,7 @@ logic FpgaPins_Fpga_CLOCK_TIME_reset_a0;
                          FpgaPins_Fpga_CLOCK_TIME_ctr1_a1 + 1;
             
                      assign FpgaPins_Fpga_CLOCK_TIME_clk1_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0 :
-                                   (FpgaPins_Fpga_CLOCK_TIME_ctr1_a0 == 24'hFFFFFF) ? FpgaPins_Fpga_CLOCK_TIME_clk1_a1 + 1 :
+                                   (FpgaPins_Fpga_CLOCK_TIME_ctr1_a0 == 24'd20_000) ? FpgaPins_Fpga_CLOCK_TIME_clk1_a1 + 1 :
                                    FpgaPins_Fpga_CLOCK_TIME_clk1_a1;
             
                      assign FpgaPins_Fpga_CLOCK_TIME_out_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_clk1_a0;
