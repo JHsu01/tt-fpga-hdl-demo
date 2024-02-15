@@ -18,7 +18,7 @@ module top(input logic clk, input logic reset, input logic [31:0] cyc_cnt, outpu
    logic [7:0] ui_in, uo_out;
    
    logic [31:0] r;
-   always @(posedge clk) r <= $urandom();
+   always @(posedge clk) r <= 0;
    assign ui_in = 8'b00000001;
    
    logic ena = 1'b0;
