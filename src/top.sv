@@ -99,9 +99,9 @@ logic [7:0] L0_sseg_digit_n_a0;
 // For $sseg_segment_n.
 logic [6:0] L0_sseg_segment_n_a0;
 
-// For /fpga_pins/fpga|clock_time$clock.
-logic [3:0] FpgaPins_Fpga_CLOCK_TIME_clock_a0,
-            FpgaPins_Fpga_CLOCK_TIME_clock_a1;
+// For /fpga_pins/fpga|clock_time$clk1.
+logic [3:0] FpgaPins_Fpga_CLOCK_TIME_clk1_a0,
+            FpgaPins_Fpga_CLOCK_TIME_clk1_a1;
 
 // For /fpga_pins/fpga|clock_time$ctr1.
 logic [23:0] FpgaPins_Fpga_CLOCK_TIME_ctr1_a0,
@@ -140,8 +140,8 @@ logic FpgaPins_Fpga_CLOCK_TIME_reset_a0;
          // Scope: |clock_time
          //
 
-            // Staging of $clock.
-            always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_clock_a1[3:0] <= FpgaPins_Fpga_CLOCK_TIME_clock_a0[3:0];
+            // Staging of $clk1.
+            always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_clk1_a1[3:0] <= FpgaPins_Fpga_CLOCK_TIME_clk1_a0[3:0];
 
             // Staging of $ctr1.
             always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_ctr1_a1[23:0] <= FpgaPins_Fpga_CLOCK_TIME_ctr1_a0[23:0];
@@ -207,8 +207,8 @@ logic FpgaPins_Fpga_CLOCK_TIME_reset_a0;
             // Scope: |clock_time
             //
             if (1) begin : P_clock_time
-               (* keep *) logic [3:0] \///@0$clock ;
-               assign \///@0$clock = FpgaPins_Fpga_CLOCK_TIME_clock_a0;
+               (* keep *) logic [3:0] \///@0$clk1 ;
+               assign \///@0$clk1 = FpgaPins_Fpga_CLOCK_TIME_clk1_a0;
                (* keep *) logic [23:0] \///@0$ctr1 ;
                assign \///@0$ctr1 = FpgaPins_Fpga_CLOCK_TIME_ctr1_a0;
                (* keep *) logic  \>>>@0$ctrl ;
@@ -270,11 +270,11 @@ logic FpgaPins_Fpga_CLOCK_TIME_reset_a0;
                         (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 24'b0:
                          FpgaPins_Fpga_CLOCK_TIME_ctr1_a1 + 1;
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_clock_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0 :
-                                   (FpgaPins_Fpga_CLOCK_TIME_ctrl_a0 == 24'hFFFFFF) ? FpgaPins_Fpga_CLOCK_TIME_clock_a1 + 1 :
-                                   FpgaPins_Fpga_CLOCK_TIME_clock_a0;
+                     assign FpgaPins_Fpga_CLOCK_TIME_clk1_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0 :
+                                   (FpgaPins_Fpga_CLOCK_TIME_ctrl_a0 == 24'hFFFFFF) ? FpgaPins_Fpga_CLOCK_TIME_clk1_a1 + 1 :
+                                   FpgaPins_Fpga_CLOCK_TIME_clk1_a0;
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_out_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_clock_a0;
+                     assign FpgaPins_Fpga_CLOCK_TIME_out_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_clk1_a0;
             
                      assign FpgaPins_Fpga_CLOCK_TIME_digit_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_out_a0[3:0];
             
