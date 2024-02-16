@@ -280,15 +280,15 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                      // ======================================================
             
                      assign FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[23:0] =
-                        (FpgaPins_Fpga_CLOCK_TIME_reset_a0 || FpgaPins_Fpga_CLOCK_TIME_cycounter_a1 == 24'd20000 - 24'd1) ? 24'b0 :
+                        (FpgaPins_Fpga_CLOCK_TIME_reset_a0 || FpgaPins_Fpga_CLOCK_TIME_cycounter_a1 == 24'd20000000 - 24'd1) ? 24'b0 :
                          FpgaPins_Fpga_CLOCK_TIME_cycounter_a1 + 1;
             
                      // $pulse = signal we set to pulse once per second
-                     assign FpgaPins_Fpga_CLOCK_TIME_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_cycounter_a0 == 24'd20000 - 24'd1);
+                     assign FpgaPins_Fpga_CLOCK_TIME_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_cycounter_a0 == 24'd20000000 - 24'd1);
             
             
                      // $refresh = LED frequency of switching
-                     assign FpgaPins_Fpga_CLOCK_TIME_refresh_a0 = (FpgaPins_Fpga_CLOCK_TIME_cycounter_a0 == 24'd20000 - 24'd1);
+                     assign FpgaPins_Fpga_CLOCK_TIME_refresh_a0 = (FpgaPins_Fpga_CLOCK_TIME_cycounter_a0 == 24'd20000000 - 24'd1);
             
                      assign FpgaPins_Fpga_CLOCK_TIME_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
                                          !FpgaPins_Fpga_CLOCK_TIME_pulse_a0 ? FpgaPins_Fpga_CLOCK_TIME_ones_digit_a1 :
