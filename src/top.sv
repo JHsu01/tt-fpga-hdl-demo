@@ -288,7 +288,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
             
             
                      // $refresh = LED frequency of switching
-                     assign FpgaPins_Fpga_CLOCK_TIME_refresh_a0 = (FpgaPins_Fpga_CLOCK_TIME_cycounter_a0 == 24'd20000000 - 24'd1);
+                     assign FpgaPins_Fpga_CLOCK_TIME_refresh_a0 = (FpgaPins_Fpga_CLOCK_TIME_cycounter_a0 == 1000000);
             
                      assign FpgaPins_Fpga_CLOCK_TIME_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
                                          !FpgaPins_Fpga_CLOCK_TIME_pulse_a0 ? FpgaPins_Fpga_CLOCK_TIME_ones_digit_a1 :
@@ -323,7 +323,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                         (FpgaPins_Fpga_CLOCK_TIME_digit_a0 == 4'h08) ? 7'b1111111 :
                         7'b1100111 ;
             
-                     assign uo_out[6:0] = {1'b0,FpgaPins_Fpga_CLOCK_TIME_showbits_a0[5:0]};
+                     assign uo_out[6:0] = FpgaPins_Fpga_CLOCK_TIME_showbits_a0[6:0];
             
                // Note that pipesignals assigned here can be found under /fpga_pins/fpga.
             
