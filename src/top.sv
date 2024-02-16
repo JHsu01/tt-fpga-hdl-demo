@@ -288,7 +288,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
             
             
                      // $refresh = LED frequency of switching
-                     assign FpgaPins_Fpga_CLOCK_TIME_refresh_a0 = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[7] ? 1'b0 :
+                     assign FpgaPins_Fpga_CLOCK_TIME_refresh_a0 = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[9] ? 1'b0 :
                                 1'b1;
             
                      assign FpgaPins_Fpga_CLOCK_TIME_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
