@@ -4,7 +4,7 @@
 //_\SV
    // Include Tiny Tapeout Lab.
    // Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlv_lib/tiny_tapeout_lib.tlv"// Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlv_lib/fpga_includes.tlv"
-//_\source top.tlv 106
+//_\source top.tlv 134
 
 //_\SV
 
@@ -49,7 +49,6 @@ endmodule
 // Provide a wrapper module to debounce input signals if requested.
 
 //_\SV
-
 
 
 // =======================
@@ -237,7 +236,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
 //_\TLV
    /* verilator lint_off UNOPTFLAT */
    // Connect Tiny Tapeout I/Os to Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 175 as: m5+tt_connections()
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 202 as: m5+tt_connections()
       assign L0_slideswitch_a0[7:0] = ui_in;
       assign L0_sseg_segment_n_a0[6:0] = ~ uo_out[6:0];
       assign L0_sseg_decimal_point_n_a0 = ~ uo_out[7];
@@ -245,7 +244,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
    //_\end_source
 
    // Instantiate the Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 178 as: m5+board(/top, /fpga, 7, $, , clock)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 205 as: m5+board(/top, /fpga, 7, $, , clock)
       
       //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 355   // Instantiated from /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv, 309 as: m4+thanks(m5__l(309)m5_eval(m5_get(BOARD_THANKS_ARGS)))
          //_/thanks
@@ -266,17 +265,28 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                      assign FpgaPins_Fpga_CLOCK_TIME_reset_a0 = reset || ui_in[7];
             
                      // ======================================================
-                     // cycounter = cycle count. If 20khz, then it will count
-                     // 20000 cycles per second.
+                     // $cycounter = the cycle count. This clock is set to
+                     // 20khz,which means it will count 20000 cycles per second
                      // ======================================================
             
                      assign FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[24:0] =
                         (FpgaPins_Fpga_CLOCK_TIME_reset_a0 || FpgaPins_Fpga_CLOCK_TIME_cycounter_a1 == 25'd20000000 - 25'd1) ? 25'b0 :
                          FpgaPins_Fpga_CLOCK_TIME_cycounter_a1 + 1;
             
+                     // ======================================================
                      // $pulse = signal we set to pulse once per second
+                     // This is the driving pulse for other pieces of logic
+                     // ======================================================
+            
                      assign FpgaPins_Fpga_CLOCK_TIME_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_cycounter_a0 == 25'd20000000 - 24'd1);
             
+                     // ======================================================
+                     // $ones_digit & $tens_digit = the right & left numbers
+                     // respectively, shown on a 2 7-segment display. We set
+                     // the $ones_digit to count from numbers 0-9, and the
+                     // $tens_digit to count from 0-5. With this method, we
+                     // can display 0 - 59 seconds, before resetting.
+                     // ======================================================
             
                      assign FpgaPins_Fpga_CLOCK_TIME_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
                                          !FpgaPins_Fpga_CLOCK_TIME_pulse_a0 ? FpgaPins_Fpga_CLOCK_TIME_ones_digit_a1 :
@@ -289,13 +299,35 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                                         (FpgaPins_Fpga_CLOCK_TIME_ones_digit_a1 == 4'b1001) ? FpgaPins_Fpga_CLOCK_TIME_tens_digit_a1 + 1 :
                                         FpgaPins_Fpga_CLOCK_TIME_tens_digit_a1;
             
+                     // ======================================================
+                     // For a 2 7-segment display, 7 bits control what part of
+                     // the "8" lights up. One Bit is used to switch rapidly
+                     // between the two displays. We tie the switching to a
+                     // variable called $show_tens, which as the name implies-
+                     // shows the tens value on the display:
+                     //          ([1]0,[2]2,[3]1,[4]5,[5]9,... etc.)
+                     // Now- we need some kind of signal to drive this switching
+                     // so we latched onto an arbitrary bit of $cycounter.
+                     // ======================================================
+            
                      assign FpgaPins_Fpga_CLOCK_TIME_show_tens_a0 = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[9];
-            
-            
                      assign FpgaPins_Fpga_CLOCK_TIME_digit_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_show_tens_a0 ? FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0:
                                                 FpgaPins_Fpga_CLOCK_TIME_ones_digit_a0;
             
+                     // ======================================================
+                     // [7]th bit of uo_out is what's flipping rapidly between
+                     // 0 and 1, to show 2 values- the $tens_digit value in
+                     // the left display, and $ones_digit in the right display
+                     // ======================================================
+            
                      assign uo_out[7] = FpgaPins_Fpga_CLOCK_TIME_show_tens_a0;
+            
+                     // ======================================================
+                     // $showbits simply tells the display what hex values
+                     // align with the display. For example, for a value of
+                     // '4' we turn on the 7th, 6th, 2nd, and 1st segment
+                     // to form the shape of a '4'
+                     // ======================================================
             
                      assign FpgaPins_Fpga_CLOCK_TIME_showbits_a0[6:0] =
                         (FpgaPins_Fpga_CLOCK_TIME_digit_a0 == 4'h00) ? 7'b0111111 :
@@ -310,12 +342,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                         7'b1100111 ;
             
                      assign uo_out[6:0] = FpgaPins_Fpga_CLOCK_TIME_showbits_a0[6:0];
-            
                // Note that pipesignals assigned here can be found under /fpga_pins/fpga.
-            
-            
-            
-            
                // Connect Tiny Tapeout outputs. Note that uio_ outputs are not available in the Tiny-Tapeout-3-based FPGA boards.
                //*uo_out = 8'b0;
                
@@ -356,7 +383,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
       
    //_\end_source
    // Label the switch inputs [0..7] (1..8 on the physical switch panel) (top-to-bottom).
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 180 as: m5+tt_input_labels_viz(⌈"Value[0]", "Value[1]", "Value[2]", "Value[3]", "Op[0]", "Op[1]", "Op[2]", "="⌉)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 207 as: m5+tt_input_labels_viz(⌈"Value[0]", "Value[1]", "Value[2]", "Value[3]", "Op[0]", "Op[1]", "Op[2]", "="⌉)
       for (input_label = 0; input_label <= 7; input_label++) begin : L1_InputLabel //_/input_label
          
       end
