@@ -16,11 +16,11 @@
 module top(input logic clk, input logic reset, input logic [31:0] cyc_cnt, output logic passed, output logic failed);
    // Tiny tapeout I/O signals.
    logic [7:0] ui_in, uo_out;
-   logic [7:0]uio_in,  uio_out, uio_oe;
+   
    logic [31:0] r;
    always @(posedge clk) r <= 0;
    assign ui_in = 8'b00000001;
-   assign uio_in = 8'b0;
+   
    logic ena = 1'b0;
    logic rst_n = ! reset;
 
@@ -58,11 +58,11 @@ endmodule
 module tt_um_template (
     input  wire [7:0] ui_in,    // Dedicated inputs - connected to the input switches
     output wire [7:0] uo_out,   // Dedicated outputs - connected to the 7 segment display
-       // The FPGA is based on TinyTapeout 3 which has no bidirectional I/Os (vs. TT6 for the ASIC).
+    /*   // The FPGA is based on TinyTapeout 3 which has no bidirectional I/Os (vs. TT6 for the ASIC).
     input  wire [7:0] uio_in,   // IOs: Bidirectional Input path
     output wire [7:0] uio_out,  // IOs: Bidirectional Output path
     output wire [7:0] uio_oe,   // IOs: Bidirectional Enable path (active high: 0=input, 1=output)
-    
+    */
     input  wire       ena,      // will go high when the design is enabled
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
@@ -106,7 +106,7 @@ logic [24:0] FpgaPins_Fpga_CLOCK_TIME_cycounter_a0,
 logic [3:0] FpgaPins_Fpga_CLOCK_TIME_digit_a0;
 
 // For /fpga_pins/fpga|clock_time$frequency.
-logic FpgaPins_Fpga_CLOCK_TIME_frequency_a0;
+logic [24:0] FpgaPins_Fpga_CLOCK_TIME_frequency_a0;
 
 // For /fpga_pins/fpga|clock_time$ones_digit.
 logic [3:0] FpgaPins_Fpga_CLOCK_TIME_ones_digit_a0,
@@ -208,7 +208,7 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                assign \///@0$cycounter = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0;
                (* keep *) logic [3:0] \///@0$digit ;
                assign \///@0$digit = FpgaPins_Fpga_CLOCK_TIME_digit_a0;
-               (* keep *) logic  \///@0$frequency ;
+               (* keep *) logic [24:0] \///@0$frequency ;
                assign \///@0$frequency = FpgaPins_Fpga_CLOCK_TIME_frequency_a0;
                (* keep *) logic [3:0] \///@0$ones_digit ;
                assign \///@0$ones_digit = FpgaPins_Fpga_CLOCK_TIME_ones_digit_a0;
@@ -280,10 +280,10 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                      //
                      // ======================================================
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_frequency_a0 = ui_in[1] ? 25'd10000000:
-                                  ui_in[2] ? 25'd12000000:
-                                  ui_in[3] ? 25'd14000000:
-                                              25'd20000000;
+                     assign FpgaPins_Fpga_CLOCK_TIME_frequency_a0[24:0] = ui_in[1] ? 25'd10000000:
+                                        ui_in[2] ? 25'd12000000:
+                                        ui_in[3] ? 25'd14000000:
+                                                    25'd20000000;
             
             
                      assign FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[24:0] =
@@ -362,8 +362,8 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_tens_digit_a0,
                // Note that pipesignals assigned here can be found under /fpga_pins/fpga.
                // Connect Tiny Tapeout outputs. Note that uio_ outputs are not available in the Tiny-Tapeout-3-based FPGA boards.
                //*uo_out = 8'b0;
-               assign uio_out = 8'b0;
-               assign uio_oe = 8'b0;
+               
+               
             //_\end_source
    
       // LEDs.
