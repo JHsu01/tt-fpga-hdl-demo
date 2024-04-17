@@ -119,7 +119,8 @@ logic FpgaPins_Fpga_CLOCK_TIME_display_switch_a0;
 logic [24:0] FpgaPins_Fpga_CLOCK_TIME_frequency_a0;
 
 // For /fpga_pins/fpga|clock_time$min_ones_digit.
-logic [3:0] FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0;
+logic [3:0] FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0,
+            FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1;
 
 // For /fpga_pins/fpga|clock_time$min_pulse.
 logic FpgaPins_Fpga_CLOCK_TIME_min_pulse_a0;
@@ -163,6 +164,9 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
 
             // Staging of $cycounter.
             always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_cycounter_a1[24:0] <= FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[24:0];
+
+            // Staging of $min_ones_digit.
+            always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1[3:0] <= FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0[3:0];
 
             // Staging of $sec_ones_digit.
             always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1[3:0] <= FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a0[3:0];
@@ -346,10 +350,10 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      assign FpgaPins_Fpga_CLOCK_TIME_min_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a1 == 4'b0101 && FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1 == 4'b1001) ? 'b1 :
                                   'b0;
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0[3:0] = 4'b1001;
-                     //                    !$min_pulse ? >>1$min_ones_digit :
-                     //                   (>>1$min_ones_digit == 4'b1001) ? 4'b0 :
-                     //                   >>1$min_ones_digit + 1;
+                     assign FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
+                                         !FpgaPins_Fpga_CLOCK_TIME_min_pulse_a0 ? FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1 :
+                                        (FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1 == 4'b1001) ? 4'b0 :
+                                        FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1 + 1;
             
                      assign FpgaPins_Fpga_CLOCK_TIME_min_tens_digit_a0[3:0] = 4'b0;
                      //                   !$min_pulse ? >>1$min_tens_digit :
