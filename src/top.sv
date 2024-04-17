@@ -368,8 +368,8 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      // ======================================================
             
                      assign FpgaPins_Fpga_CLOCK_TIME_show_tens_a0 = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[9];
-                     assign FpgaPins_Fpga_CLOCK_TIME_digit_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_show_tens_a0 ? FpgaPins_Fpga_CLOCK_TIME_min_tens_digit_a0:
-                                                FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0;
+                     assign FpgaPins_Fpga_CLOCK_TIME_digit_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_show_tens_a0 ? FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a0:
+                                                FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a0;
             
                      // ======================================================
                      // [7]th bit of uo_out is what's flipping rapidly between
