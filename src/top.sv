@@ -398,12 +398,12 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      // ======================================================
                      // *ui_in[0] ? 25'd10000000:
                      // *ui_in[1] ? 25'd12000000:
-                     assign FpgaPins_Fpga_CLOCK_TIME_frequency_a0[24:0] = ui_in[0] ? 25'd02000000:
-                                        ui_in[1] ? 25'd00200000:
-                                        ui_in[2] ? 25'd14000000:
-                                                    25'd20000000;
+                     //$frequency[24:0] = *ui_in[0] ? 25'd02000000:
+                      //                  *ui_in[1] ? 25'd00200000:
+                      //                  *ui_in[2] ? 25'd14000000:
+                      //                              25'd20000000;
             
-                     //$frequency[24:0] = 25'd00000002;
+                     assign FpgaPins_Fpga_CLOCK_TIME_frequency_a0[24:0] = 25'd00000001;
                      //for waveform reading lol
             
                      assign FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[24:0] =
@@ -455,7 +455,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
             
                      // Hour_Pulse to drive hours
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_hour_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_min_tens_digit_a1 == 4'b0101 && FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1 == 4'b1001 && FpgaPins_Fpga_CLOCK_TIME_sec_pulse_a0) ? 'b1 :
+                     assign FpgaPins_Fpga_CLOCK_TIME_hour_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_min_tens_digit_a1 == 4'b0101 && FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1 == 4'b1001 && FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a1 == 4'b0101 && FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1 == 4'b1001 && FpgaPins_Fpga_CLOCK_TIME_sec_pulse_a0) ? 'b1 :
                                   'b0;
             
             
