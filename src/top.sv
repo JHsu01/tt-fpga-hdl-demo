@@ -527,7 +527,7 @@ logic FpgaPins_Fpga_CLOCK_TIME_wave_a0;
                      //we'll need to create a counter that loops through, basically
                      //for 4 positions, and line up the digit, as well as the
                      //annode / cathode that the pin fires to.
-                     assign FpgaPins_Fpga_CLOCK_TIME_display_switch_cath_a0 = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[8];
+                     assign FpgaPins_Fpga_CLOCK_TIME_display_switch_cath_a0 = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[10];
             
                      assign FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0[1:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 2'b0:
                                         !FpgaPins_Fpga_CLOCK_TIME_display_switch_cath_a0 ? FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1 :
