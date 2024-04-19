@@ -4,7 +4,7 @@
 //_\SV
    // Include Tiny Tapeout Lab.
    // Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlv_lib/tiny_tapeout_lib.tlv"// Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlv_lib/fpga_includes.tlv"
-//_\source top.tlv 228
+//_\source top.tlv 222
 
 //_\SV
 
@@ -377,7 +377,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
 //_\TLV
    /* verilator lint_off UNOPTFLAT */
    // Connect Tiny Tapeout I/Os to Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 297 as: m5+tt_connections()
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 291 as: m5+tt_connections()
       assign L0_slideswitch_a0[7:0] = ui_in;
       assign L0_sseg_segment_n_a0[6:0] = ~ uo_out[6:0];
       assign L0_sseg_decimal_point_n_a0 = ~ uo_out[7];
@@ -385,7 +385,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
    //_\end_source
 
    // Instantiate the Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 300 as: m5+board(/top, /fpga, 7, $, , clock)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 294 as: m5+board(/top, /fpga, 7, $, , clock)
       
       //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 355   // Instantiated from /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv, 309 as: m4+thanks(m5__l(309)m5_eval(m5_get(BOARD_THANKS_ARGS)))
          //_/thanks
@@ -530,7 +530,9 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                                           (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b11) ? FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0:
                                           FpgaPins_Fpga_CLOCK_TIME_four_display_a1;
             
-                     assign {uo_out[7], uo_out[6], uo_out[5], uo_out[4]} = FpgaPins_Fpga_CLOCK_TIME_cathodes_a0;
+            
+                     //{*uio_out[0], *uio_out[1], *uio_out[2], *uio_out[3]} = $cathodes;
+            
             
                      assign FpgaPins_Fpga_CLOCK_TIME_cathodes_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b00) ? 4'b1000:
                                  (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b01) ? 4'b0100:
@@ -543,16 +545,8 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                                    ui_in[6] ? FpgaPins_Fpga_CLOCK_TIME_four_display_a0:
                                                FpgaPins_Fpga_CLOCK_TIME_display_seconds_a0;
             
-                     // ======================================================
-                     // [7]th bit of uo_out is what's flipping rapidly between
-                     // 0 and 1, to show 2 values- the $sec_tens_digit value in
-                     // the left display, and $sec_ones_digit in the right display
-                     // If the 4th input is set, it will output the minute pulse
-                     // ======================================================
-                     //*ui_in[3] ? $min_pulse:
             
             
-                     //*uo_out[7] = $wave;
                      // ======================================================
                      // $showbits simply tells the display what hex values
                      // align with the display. For example, for a value of
@@ -573,8 +567,8 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                         7'b1100111 ;
             
             
-                     assign uo_out[3:0] = FpgaPins_Fpga_CLOCK_TIME_showbits_a0[3:0];
-            
+                     assign uo_out[6:0] = FpgaPins_Fpga_CLOCK_TIME_showbits_a0[6:0];
+                     assign uo_out[7] = FpgaPins_Fpga_CLOCK_TIME_display_switch_a0;
             
             
                // Note that pipesignals assigned here can be found under /fpga_pins/fpga.
@@ -618,7 +612,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
       
    //_\end_source
    // Label the switch inputs [0..7] (1..8 on the physical switch panel) (top-to-bottom).
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 302 as: m5+tt_input_labels_viz(⌈"Value[0]", "Value[1]", "Value[2]", "Value[3]", "Op[0]", "Op[1]", "Op[2]", "="⌉)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 296 as: m5+tt_input_labels_viz(⌈"Value[0]", "Value[1]", "Value[2]", "Value[3]", "Op[0]", "Op[1]", "Op[2]", "="⌉)
       for (input_label = 0; input_label <= 7; input_label++) begin : L1_InputLabel //_/input_label
          
       end
