@@ -4,7 +4,7 @@
 //_\SV
    // Include Tiny Tapeout Lab.
    // Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlv_lib/tiny_tapeout_lib.tlv"// Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlv_lib/fpga_includes.tlv"
-//_\source top.tlv 230
+//_\source top.tlv 225
 
 //_\SV
 
@@ -158,18 +158,12 @@ logic [6:0] L0_sseg_segment_n_a0;
 logic [1:0] FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0,
             FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1;
 
-// For /fpga_pins/fpga|clock_time$cathode_select.
-logic [3:0] FpgaPins_Fpga_CLOCK_TIME_cathode_select_a0;
-
 // For /fpga_pins/fpga|clock_time$cycounter.
 logic [24:0] FpgaPins_Fpga_CLOCK_TIME_cycounter_a0,
              FpgaPins_Fpga_CLOCK_TIME_cycounter_a1;
 
 // For /fpga_pins/fpga|clock_time$digit.
 logic [3:0] FpgaPins_Fpga_CLOCK_TIME_digit_a0;
-
-// For /fpga_pins/fpga|clock_time$display_four_seg.
-logic [3:0] FpgaPins_Fpga_CLOCK_TIME_display_four_seg_a0;
 
 // For /fpga_pins/fpga|clock_time$display_hours.
 logic [3:0] FpgaPins_Fpga_CLOCK_TIME_display_hours_a0;
@@ -182,6 +176,10 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_display_seconds_a0;
 
 // For /fpga_pins/fpga|clock_time$display_switch.
 logic FpgaPins_Fpga_CLOCK_TIME_display_switch_a0;
+
+// For /fpga_pins/fpga|clock_time$four_display.
+logic [3:0] FpgaPins_Fpga_CLOCK_TIME_four_display_a0,
+            FpgaPins_Fpga_CLOCK_TIME_four_display_a1;
 
 // For /fpga_pins/fpga|clock_time$frequency.
 logic [24:0] FpgaPins_Fpga_CLOCK_TIME_frequency_a0;
@@ -225,6 +223,9 @@ logic [3:0] FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a0,
 // For /fpga_pins/fpga|clock_time$showbits.
 logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
 
+// For /fpga_pins/fpga|clock_time$wave.
+logic FpgaPins_Fpga_CLOCK_TIME_wave_a0;
+
 
 
 
@@ -247,6 +248,9 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
 
             // Staging of $cycounter.
             always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_cycounter_a1[24:0] <= FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[24:0];
+
+            // Staging of $four_display.
+            always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_four_display_a1[3:0] <= FpgaPins_Fpga_CLOCK_TIME_four_display_a0[3:0];
 
             // Staging of $hour_ones_digit.
             always_ff @(posedge clk) FpgaPins_Fpga_CLOCK_TIME_hour_ones_digit_a1[3:0] <= FpgaPins_Fpga_CLOCK_TIME_hour_ones_digit_a0[3:0];
@@ -318,14 +322,10 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
             if (1) begin : P_clock_time
                (* keep *) logic [1:0] \///@0$cathode_cycle ;
                assign \///@0$cathode_cycle = FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0;
-               (* keep *) logic [3:0] \///@0$cathode_select ;
-               assign \///@0$cathode_select = FpgaPins_Fpga_CLOCK_TIME_cathode_select_a0;
                (* keep *) logic [24:0] \///@0$cycounter ;
                assign \///@0$cycounter = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0;
                (* keep *) logic [3:0] \///@0$digit ;
                assign \///@0$digit = FpgaPins_Fpga_CLOCK_TIME_digit_a0;
-               (* keep *) logic [3:0] \///@0$display_four_seg ;
-               assign \///@0$display_four_seg = FpgaPins_Fpga_CLOCK_TIME_display_four_seg_a0;
                (* keep *) logic [3:0] \///@0$display_hours ;
                assign \///@0$display_hours = FpgaPins_Fpga_CLOCK_TIME_display_hours_a0;
                (* keep *) logic [3:0] \///@0$display_minutes ;
@@ -334,6 +334,8 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                assign \///@0$display_seconds = FpgaPins_Fpga_CLOCK_TIME_display_seconds_a0;
                (* keep *) logic  \///@0$display_switch ;
                assign \///@0$display_switch = FpgaPins_Fpga_CLOCK_TIME_display_switch_a0;
+               (* keep *) logic [3:0] \///@0$four_display ;
+               assign \///@0$four_display = FpgaPins_Fpga_CLOCK_TIME_four_display_a0;
                (* keep *) logic [24:0] \///@0$frequency ;
                assign \///@0$frequency = FpgaPins_Fpga_CLOCK_TIME_frequency_a0;
                (* keep *) logic [3:0] \///@0$hour_ones_digit ;
@@ -358,6 +360,8 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                assign \///@0$sec_tens_digit = FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a0;
                (* keep *) logic [6:0] \///@0$showbits ;
                assign \///@0$showbits = FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
+               (* keep *) logic  \///@0$wave ;
+               assign \///@0$wave = FpgaPins_Fpga_CLOCK_TIME_wave_a0;
             end
          end
       end
@@ -377,7 +381,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
 //_\TLV
    /* verilator lint_off UNOPTFLAT */
    // Connect Tiny Tapeout I/Os to Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 299 as: m5+tt_connections()
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 294 as: m5+tt_connections()
       assign L0_slideswitch_a0[7:0] = ui_in;
       assign L0_sseg_segment_n_a0[6:0] = ~ uo_out[6:0];
       assign L0_sseg_decimal_point_n_a0 = ~ uo_out[7];
@@ -385,7 +389,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
    //_\end_source
 
    // Instantiate the Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 302 as: m5+board(/top, /fpga, 7, $, , clock)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 297 as: m5+board(/top, /fpga, 7, $, , clock)
       
       //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 355   // Instantiated from /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv, 309 as: m4+thanks(m5__l(309)m5_eval(m5_get(BOARD_THANKS_ARGS)))
          //_/thanks
@@ -447,7 +451,6 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      assign FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
                                         !FpgaPins_Fpga_CLOCK_TIME_sec_pulse_a0 ? FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1 :
                                         (FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1 == 4'b1001) ? 4'b0 :
-                                        (FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a0 > 4'b1001) ? 4'b0:
                                         FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1 + 1;
             
                      assign FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0 :
@@ -460,7 +463,6 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      assign FpgaPins_Fpga_CLOCK_TIME_min_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a1 == 4'b0101 && FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1 == 4'b1001 && FpgaPins_Fpga_CLOCK_TIME_sec_pulse_a0) ? 'b1 :
                                   'b0;
             
-                     // *ui_in[4] && *ui_in[7] && (>>1*ui_in[7] == 0) && (>>1$min_ones_digit + 2 > 6)  ? >>1$min_ones_digit + 2:
             
                      assign FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
                                          !FpgaPins_Fpga_CLOCK_TIME_min_pulse_a0 ? FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1 :
@@ -477,6 +479,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
             
                      assign FpgaPins_Fpga_CLOCK_TIME_hour_pulse_a0 = (FpgaPins_Fpga_CLOCK_TIME_min_tens_digit_a1 == 4'b0101 && FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a1 == 4'b1001 && FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a1 == 4'b0101 && FpgaPins_Fpga_CLOCK_TIME_sec_ones_digit_a1 == 4'b1001 && FpgaPins_Fpga_CLOCK_TIME_sec_pulse_a0) ? 'b1 :
                                   'b0;
+            
             
             
                      assign FpgaPins_Fpga_CLOCK_TIME_hour_ones_digit_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 4'b0:
@@ -504,9 +507,8 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      // so we latched onto an arbitrary bit of $cycounter.
                      // ======================================================
             
-                     //$show_tens = $cycounter[9];
-            
                      // display switch will go either 0 or 1
+            
                      assign FpgaPins_Fpga_CLOCK_TIME_display_switch_a0 = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[9];
             
                      assign FpgaPins_Fpga_CLOCK_TIME_display_seconds_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_display_switch_a0 ? FpgaPins_Fpga_CLOCK_TIME_sec_tens_digit_a0:
@@ -516,15 +518,28 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      assign FpgaPins_Fpga_CLOCK_TIME_display_hours_a0[3:0] = FpgaPins_Fpga_CLOCK_TIME_display_switch_a0 ? FpgaPins_Fpga_CLOCK_TIME_hour_tens_digit_a0:
                                                              FpgaPins_Fpga_CLOCK_TIME_hour_ones_digit_a0;
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_display_four_seg_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b00) ? FpgaPins_Fpga_CLOCK_TIME_hour_tens_digit_a0:
-                                              (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b01) ? FpgaPins_Fpga_CLOCK_TIME_hour_ones_digit_a0:
-                                              (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b10) ? FpgaPins_Fpga_CLOCK_TIME_min_tens_digit_a0:
-                                              FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0;
+                     //displaying on a 4 segment is a little harder, but it's doable.
+                     //we'll need to create a counter that loops through, basically
+                     //for 4 positions, and line up the digit, as well as the
+                     //annode / cathode that the pin fires to.
+            
+                     assign FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0[1:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 2'b0:
+                                        !FpgaPins_Fpga_CLOCK_TIME_display_switch_a0 ? FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1 :
+                                        (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1 == 2'b11) ? 2'b0 :
+                                        FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1 + 1;
+            
+                     assign FpgaPins_Fpga_CLOCK_TIME_wave_a0 = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b00);
+            
+                     assign FpgaPins_Fpga_CLOCK_TIME_four_display_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b00) ? FpgaPins_Fpga_CLOCK_TIME_hour_tens_digit_a0:
+                                          (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b01) ? FpgaPins_Fpga_CLOCK_TIME_hour_ones_digit_a0:
+                                          (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b10) ? FpgaPins_Fpga_CLOCK_TIME_min_tens_digit_a0:
+                                          (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b11) ? FpgaPins_Fpga_CLOCK_TIME_min_ones_digit_a0:
+                                          FpgaPins_Fpga_CLOCK_TIME_four_display_a1;
             
             
                      assign FpgaPins_Fpga_CLOCK_TIME_digit_a0[3:0] = ui_in[4] ? FpgaPins_Fpga_CLOCK_TIME_display_minutes_a0:
                                    ui_in[5] ? FpgaPins_Fpga_CLOCK_TIME_display_hours_a0:
-                                   ui_in[7] ? FpgaPins_Fpga_CLOCK_TIME_display_four_seg_a0:
+                                   ui_in[6] ? FpgaPins_Fpga_CLOCK_TIME_four_display_a0:
                                                FpgaPins_Fpga_CLOCK_TIME_display_seconds_a0;
             
                      // ======================================================
@@ -535,6 +550,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
                      // ======================================================
             
                      assign uo_out[7] = ui_in[3] ? FpgaPins_Fpga_CLOCK_TIME_min_pulse_a0:
+                                  ui_in[6] ? FpgaPins_Fpga_CLOCK_TIME_wave_a0:
                                   FpgaPins_Fpga_CLOCK_TIME_display_switch_a0;
             
             
@@ -559,24 +575,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
             
                      assign uo_out[6:0] = FpgaPins_Fpga_CLOCK_TIME_showbits_a0[6:0];
             
-                     // ======================================================
-                     // Addition time! Time for time manipulation!
-                     // [1-3] Are Frequencies, [4] is Arduino Mode, [5] Switches
-                     // To minutes, [6] Switches to hours, [7] 4 segment display
-                     // which leaves [8] for ADD!
-                     // ======================================================
             
-                     assign {uo_out[0], uo_out[1], uo_out[2], uo_out[3]} = FpgaPins_Fpga_CLOCK_TIME_cathode_select_a0;
-            
-                     assign FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0[1:0] = (FpgaPins_Fpga_CLOCK_TIME_reset_a0) ? 2'b0:
-                                         !FpgaPins_Fpga_CLOCK_TIME_display_switch_a0 ? FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1 :
-                                        (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1 == 2'b11) ? 2'b0 :
-                                        FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a1 + 1;
-            
-                     assign FpgaPins_Fpga_CLOCK_TIME_cathode_select_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b00) ? 4'b1000:
-                                            (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b01) ? 4'b0100:
-                                            (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b10) ? 4'b0010:
-                                            4'b0001;
             
             
                // Note that pipesignals assigned here can be found under /fpga_pins/fpga.
@@ -620,7 +619,7 @@ logic [6:0] FpgaPins_Fpga_CLOCK_TIME_showbits_a0;
       
    //_\end_source
    // Label the switch inputs [0..7] (1..8 on the physical switch panel) (top-to-bottom).
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 304 as: m5+tt_input_labels_viz(⌈"Value[0]", "Value[1]", "Value[2]", "Value[3]", "Op[0]", "Op[1]", "Op[2]", "="⌉)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 299 as: m5+tt_input_labels_viz(⌈"Value[0]", "Value[1]", "Value[2]", "Value[3]", "Op[0]", "Op[1]", "Op[2]", "="⌉)
       for (input_label = 0; input_label <= 7; input_label++) begin : L1_InputLabel //_/input_label
          
       end
