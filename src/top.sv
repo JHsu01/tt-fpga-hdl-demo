@@ -520,13 +520,13 @@ logic FpgaPins_Fpga_CLOCK_TIME_wave_a0;
                      //annode / cathode that the pin fires to.
                      //$display_switch_cath = $cycounter[7];
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0[1:0] = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[8:9];
+                     assign FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0[1:0] = FpgaPins_Fpga_CLOCK_TIME_cycounter_a0[10:9];
                      //$cathode_cycle[1:0] = ($reset) ? 2'b0:
                      //                   !$display_switch_cath ? >>1$cathode_cycle + 1:
                      //                   (>>1$cathode_cycle == 2'b11) ? 2'b0 :
                      //                   >>1$cathode_cycle;
             
-                     assign FpgaPins_Fpga_CLOCK_TIME_wave_a0 = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b00);
+                     assign FpgaPins_Fpga_CLOCK_TIME_wave_a0 = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b11);
             
                      assign FpgaPins_Fpga_CLOCK_TIME_four_display_a0[3:0] = (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b00) ? FpgaPins_Fpga_CLOCK_TIME_hour_tens_digit_a0:
                                           (FpgaPins_Fpga_CLOCK_TIME_cathode_cycle_a0 == 2'b01) ? FpgaPins_Fpga_CLOCK_TIME_hour_ones_digit_a0:
