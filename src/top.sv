@@ -547,11 +547,11 @@ logic FpgaPins_Fpga_CLOCK_TIME_wave_a0;
                      // If the 4th input is set, it will output the minute pulse
                      // ======================================================
             
-                     assign uo_out[7] = ui_in[3] ? FpgaPins_Fpga_CLOCK_TIME_min_pulse_a0:
-                                  ui_in[6] ? FpgaPins_Fpga_CLOCK_TIME_wave_a0:
-                                  FpgaPins_Fpga_CLOCK_TIME_display_switch_a0;
+                     //*uo_out[7] = *ui_in[3] ? $min_pulse:
+                     //             *ui_in[6] ? $wave:
+                     //             $display_switch;
             
-            
+                     assign uo_out[7] = FpgaPins_Fpga_CLOCK_TIME_wave_a0;
                      // ======================================================
                      // $showbits simply tells the display what hex values
                      // align with the display. For example, for a value of
